@@ -1,0 +1,66 @@
+{
+    "projectName": "AMP Sales and Marketing Solutions AI Leave-Behind Guide",
+    "purpose": "An interactive, human-centered reference for local sales professionals to leverage AI tools for more authentic, effective, and efficient outreach. The guide is designed as a practical, branded, and accessible resource, not a replacement for sales expertise.",
+    "mainFile": "index.html",
+    "assetFolders": ["imgs"],
+    "structure": [
+      "Hero header with AMP/North Bend branding and a subtle nautical chart overlay",
+      "Table of Contents with desktop dropdown and mobile-friendly floating access",
+      "10 numbered, card-style sections, each with a title, section number, and clear navigation",
+      "Editable, copyable prompt/code blocks for sales workflow",
+      "Always-open Pro Tips and callout boxes with techniques",
+      "Floating 'Back to Top' button on desktop and mobile",
+      "Mobile-first, fully responsive layout"
+    ],
+    "features": {
+      "accessibility": [
+        "All images have descriptive alt text",
+        "Strong color contrast for all text and UI",
+        "Keyboard-accessible navigation and buttons",
+        "Section numbers and headers are high-contrast and clearly visible"
+      ],
+      "interactivity": [
+        "Editable/copyable/resettable code blocks",
+        "Floating back-to-top button appears after scrolling",
+        "Clickable Table of Contents for fast navigation"
+      ]
+    },
+    "style": {
+      "colors": {
+        "primary": "#0b3d66",
+        "accent": "#ffc857",
+        "card": "#fff",
+        "background": "#f4f7fa"
+      },
+      "fontFamily": "Inter, Helvetica, Arial, sans-serif",
+      "cardShadow": "0 8px 32px rgba(0,56,102,0.16)"
+    },
+    "mustNotChange": [
+      "Brand voice, content, and messaging tone",
+      "Logos and official color palette",
+      "Section order and titles",
+      "Personal/consultant perspective (do not introduce prescriptive sales advice)"
+    ],
+    "linting": {
+      "htmlhint": true,
+      "stylelint": true,
+      "prettier": true
+    },
+    "auditTools": [
+      "lighthouse",
+      "pa11y"
+    ],
+    "exampleAuditCommands": [
+      "serve .",
+      "lighthouse http://localhost:5000 --output html --output-path ./lighthouse-report.html",
+      "pa11y http://localhost:5000",
+      "htmlhint index.html",
+      "stylelint \"**/*.css\"",
+      "prettier --check ."
+    ],
+    "agentNotes": [
+      "Agents should use this manifest to understand the site’s intended features, constraints, and non-negotiable elements before making code or design changes.",
+      "All proposed Pull Requests must summarize changes and reference this manifest.",
+      "If unsure about a proposed change, open an Issue for human review."
+    ]
+  }
