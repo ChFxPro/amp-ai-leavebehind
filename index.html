@@ -186,8 +186,8 @@
         --ethics-bg: #e8f1fa;
         --ethics-border: #163961;
         --font: "Inter", "Segoe UI", Arial, sans-serif;
-        --body-pattern-light: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="00120120"><g fill="none" stroke="%23c4d4e3" stroke-width="0.7"><path d="M600v120M060h120"/></g></svg>");
-        --body-pattern-dark: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="00120120"><g fill="none" stroke="%2333485c" stroke-width="0.7"><path d="M600v120M060h120"/></g></svg>");
+        --body-pattern-light: url("data:image/svg+xml,%3Csvg%20xmlns%3D"http://www.w3.org/2000/svg"%20width%3D"160"%20height%3D"160"%20viewBox%3D"0%200%20160%20160"%3E%3Cg%20fill%3D"none"%20stroke%3D"%23c8d7e5"%20stroke-width%3D"0.6"%3E%3Cpath%20d%3D"M80%200v160M0%2080h160"/%3E%3C/g%3E%3C/svg%3E");
+        --body-pattern-dark: url("data:image/svg+xml,%3Csvg%20xmlns%3D"http://www.w3.org/2000/svg"%20width%3D"160"%20height%3D"160"%20viewBox%3D"0%200%20160%20160"%3E%3Cg%20fill%3D"none"%20stroke%3D"%2333485c"%20stroke-width%3D"0.6"%3E%3Cpath%20d%3D"M80%200v160M0%2080h160"/%3E%3C/g%3E%3C/svg%3E");
         --body-pattern: var(--body-pattern-light);
         --color-bg: var(--brand-white-alt);
         --color-card: var(--brand-white);
@@ -2069,24 +2069,23 @@ Summarize the current marketing challenges for [business type] in [local area]â€
             textarea.value = textarea.dataset.initial;
           });
         });
-        // Parallax effect for hero overlay and elements with data-parallax
-        function setupParallax() {
-          const overlay = document.querySelector(".hero-header-overlay");
-          const parallaxEls = document.querySelectorAll("[data-parallax]");
-          const applyParallax = () => {
-            const scrolled = window.scrollY;
-            if (overlay)
-              overlay.style.transform = `translateY(${scrolled * 0.3}px)`;
-            parallaxEls.forEach((el) => {
-              const speed = parseFloat(el.dataset.parallax) || 0.1;
-              el.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-          };
-          applyParallax();
-          window.addEventListener("scroll", () =>
-            requestAnimationFrame(applyParallax),
-          );
-        }
+      }
+      function setupParallax() {
+        const overlay = document.querySelector(".hero-header-overlay");
+        const parallaxEls = document.querySelectorAll("[data-parallax]");
+        const applyParallax = () => {
+          const scrolled = window.scrollY;
+          if (overlay)
+            overlay.style.transform = `translateY(${scrolled * 0.3}px)`;
+          parallaxEls.forEach((el) => {
+            const speed = parseFloat(el.dataset.parallax) || 0.1;
+            el.style.transform = `translateY(${scrolled * speed}px)`;
+          });
+        };
+        applyParallax();
+        window.addEventListener("scroll", () =>
+          requestAnimationFrame(applyParallax),
+        );
       }
 
       // Responsive TOC dropdown for mobile
