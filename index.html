@@ -932,18 +932,6 @@
         }
       }
       /* Callout styles with icons - unified and clean (single framing, no double border/shadow) */
-      .pro-tip,
-      .technique {
-        border-radius: 0.85rem;
-        margin: 2.5em 0 3.2em 0;
-        padding: 1.7em 2em 1.7em 2em;
-        font-size: 1.17em;
-        position: relative;
-        animation: tip-fade-in 1.2s;
-        display: flex;
-        align-items: flex-start;
-        box-shadow: 0 2px 10px rgba(255,200,87,0.06);
-      }
       .pro-tip {
         cursor: default;
         user-select: none;
@@ -960,7 +948,6 @@
         font-size: 1.05em; /* scaled down */
         box-shadow: none;
         display: block;
-        align-items: flex-start;
       }
       .pro-tip::before {
         content: "💡";
@@ -970,7 +957,25 @@
         line-height: 1;
         user-select: none;
       }
+      .pro-tip .callout-content {
+        /* Remove extra border, background, or shadow to prevent double framing */
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        color: inherit;
+        padding: 0;
+        margin: 0;
+      }
       .technique {
+        border-radius: 0.85rem;
+        margin: 2.5em 0 3.2em 0;
+        padding: 1.7em 2em 1.7em 2em;
+        font-size: 1.17em;
+        position: relative;
+        animation: tip-fade-in 1.2s;
+        display: flex;
+        align-items: flex-start;
         background: var(--pro-tip-bg);
         border-left: 7px solid var(--brand-blue-accent);
         color: var(--brand-blue-accent);
@@ -998,6 +1003,15 @@
         display: block;
         word-break: break-word;
         overflow-wrap: break-word;
+      }
+      .ethics .callout-content {
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        color: inherit;
+        padding: 0;
+        margin: 0;
       }
       .ethics::before {
         content: "🛡️";
@@ -1340,39 +1354,63 @@
         color: #192232 !important;
         background: #ffc857 !important;
       }
-      /* Unified callout style for .pro-tip, .technique, .ethics in dark mode */
-      .pro-tip,
-      .pro-tip .callout-content {
+      /* Unified callout style for .pro-tip in dark mode */
+      .pro-tip {
         background: #232f3e !important;
         color: #ffd370 !important;
         border-left: 7px solid #ffc857 !important;
         box-shadow: none !important;
-      }
-      .technique,
-      .technique .callout-content {
-        background: #232f3e !important;
-        color: #ffeebc !important;
-        border-left: 7px solid #4ea3d8 !important;
-        box-shadow: none !important;
-      }
-      .ethics,
-      .ethics .callout-content {
-        background: #233040 !important;
-        color: #ffeebc !important;
-        border-left: 7px solid #4ea3d8 !important;
-        box-shadow: none !important;
-      }
-      /* Remove double border/shadow on callouts */
-      .pro-tip,
-      .pro-tip .callout-content,
-      .technique,
-      .technique .callout-content,
-      .ethics,
-      .ethics .callout-content {
         border-radius: 0.85rem !important;
         border-right: none !important;
         border-top: none !important;
         border-bottom: none !important;
+      }
+      .pro-tip .callout-content {
+        background: none !important;
+        color: inherit !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .technique {
+        background: #232f3e !important;
+        color: #ffeebc !important;
+        border-left: 7px solid #4ea3d8 !important;
+        box-shadow: none !important;
+        border-radius: 0.85rem !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+      }
+      .technique .callout-content {
+        background: none !important;
+        color: inherit !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .ethics {
+        background: #233040 !important;
+        color: #ffeebc !important;
+        border-left: 7px solid #4ea3d8 !important;
+        box-shadow: none !important;
+        border-radius: 0.85rem !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+      }
+      .ethics .callout-content {
+        background: none !important;
+        color: inherit !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
       /* Improved .prompt-instructions for contrast/readability */
       .prompt-instructions {
@@ -2289,7 +2327,3 @@ Summarize the current marketing challenges for [business type] in [local area]�
     </script>
   </body>
 </html>
-    /* General card shadow for both modes */
-    .card {
-      box-shadow: 0 6px 28px #0006;
-    }
