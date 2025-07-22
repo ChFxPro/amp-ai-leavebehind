@@ -1,57 +1,67 @@
-// SparkPoint | Red Cross Batch Export Script (always asks for destination folder)
-
-if (app.documents.length > 0) {
-    var doc = app.activeDocument;
-    var docName = "WRC_RedCross_4col_Ad";
-
-    // Always ask for a folder
-    var folderPath = Folder.selectDialog("Select folder to save exported files");
-    if (!folderPath) {
-        alert("Export canceled. No folder was selected.");
-        throw new Error("No folder selected.");
-    }
-
-    // --- 1. Save a webp proof copy (for approval) ---
-    try {
-        var webpFile = new File(folderPath + "/" + docName + "_PROOF.webp");
-        var webpOptions = new ExportOptionsSaveForWeb();
-        webpOptions.format = SaveDocumentType.WEBP;
-        webpOptions.includeProfile = false;
-        webpOptions.interlaced = false;
-        webpOptions.quality = 85;
-        doc.exportDocument(webpFile, ExportType.SAVEFORWEB, webpOptions);
-    } catch(e) {
-        alert("WebP export failed: You may need to install the WebP plugin or use a newer Photoshop version.");
-    }
-
-    // --- 2. Save a PDF for print ---
-    var pdfFile = new File(folderPath + "/" + docName + "_PRINT.pdf");
-    var pdfSaveOptions = new PDFSaveOptions();
-    pdfSaveOptions.preserveEditability = false;
-    pdfSaveOptions.optimization = true;
-    pdfSaveOptions.quality = 12;
-    doc.saveAs(pdfFile, pdfSaveOptions, true);
-
-    // --- 3. Save a TIFF for print ---
-    var tiffFile = new File(folderPath + "/" + docName + "_PRINT.tif");
-    var tiffSaveOptions = new TiffSaveOptions();
-    tiffSaveOptions.imageCompression = TIFFEncoding.NONE;
-    tiffSaveOptions.layers = false;
-    doc.saveAs(tiffFile, tiffSaveOptions, true);
-
-    // --- 4. Save a JPEG for print ---
-    var jpegFile = new File(folderPath + "/" + docName + "_PRINT.jpg");
-    var jpegSaveOptions = new JPEGSaveOptions();
-    jpegSaveOptions.quality = 12;
-    doc.saveAs(jpegFile, jpegSaveOptions, true);
-
-    alert("Saved as:\n"
-        + "- " + docName + "_PROOF.webp\n"
-        + "- " + docName + "_PRINT.pdf\n"
-        + "- " + docName + "_PRINT.tif\n"
-        + "- " + docName + "_PRINT.jpg\n\n"
-        + "All files saved to:\n" + folderPath.fsName
-    );
-} else {
-    alert("No document open!");
-}
+{
+    "projectName": "AMP Sales and Marketing Solutions AI Leave-Behind Guide",
+    "purpose": "An interactive, human-centered reference for local sales professionals to leverage AI tools for more authentic, effective, and efficient outreach. The guide is designed as a practical, branded, and accessible resource, not a replacement for sales expertise.",
+    "mainFile": "index.html",
+    "assetFolders": ["imgs"],
+    "structure": [
+      "Hero header with AMP/North Bend branding and a subtle nautical chart overlay",
+      "Table of Contents with desktop dropdown and mobile-friendly floating access",
+      "10 numbered, card-style sections, each with a title, section number, and clear navigation",
+      "Editable, copyable prompt/code blocks for sales workflow",
+      "Always-open Pro Tips and callout boxes with techniques",
+      "Floating 'Back to Top' button on desktop and mobile",
+      "Mobile-first, fully responsive layout"
+    ],
+    "features": {
+      "accessibility": [
+        "All images have descriptive alt text",
+        "Strong color contrast for all text and UI",
+        "Keyboard-accessible navigation and buttons",
+        "Section numbers and headers are high-contrast and clearly visible"
+      ],
+      "interactivity": [
+        "Editable/copyable/resettable code blocks",
+        "Floating back-to-top button appears after scrolling",
+        "Clickable Table of Contents for fast navigation"
+      ]
+    },
+    "style": {
+      "colors": {
+        "primary": "#0b3d66",
+        "accent": "#ffc857",
+        "card": "#fff",
+        "background": "#f4f7fa"
+      },
+      "fontFamily": "Inter, Helvetica, Arial, sans-serif",
+      "cardShadow": "0 8px 32px rgba(0,56,102,0.16)"
+    },
+    "mustNotChange": [
+      "Brand voice, content, and messaging tone",
+      "Logo and recognizable brand colors; however, modern visual enhancements to backgrounds, shadows, overlays, card styling, and overall visual polish are encouraged—so long as they maintain accessibility, professionalism, and strong AMP/North Bend branding.",
+      "Section order and titles",
+      "Personal/consultant perspective (do not introduce prescriptive sales advice)"
+    ],
+    "linting": {
+      "htmlhint": true,
+      "stylelint": true,
+      "prettier": true
+    },
+    "auditTools": [
+      "lighthouse",
+      "pa11y"
+    ],
+    "exampleAuditCommands": [
+      "serve .",
+      "lighthouse http://localhost:5000 --output html --output-path ./lighthouse-report.html",
+      "pa11y http://localhost:5000",
+      "htmlhint index.html",
+      "stylelint \"**/*.css\"",
+      "prettier --check ."
+    ],
+    "agentNotes": [
+      "Agents should use this manifest to understand the site’s intended features, constraints, and non-negotiable elements before making code or design changes.",
+      "Modern visual upgrades (e.g. dark/light mode, parallax, SVG/textured backgrounds, advanced responsiveness, modern spacing, card animation) are encouraged, as long as brand recognition and accessibility are maintained.",
+      "All proposed Pull Requests must summarize changes and reference this manifest.",
+      "If unsure about a proposed change, open an Issue for human review."
+    ]
+  }
