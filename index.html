@@ -172,52 +172,7 @@
         border-top-right-radius: 0 !important;
       }
       /* Header: Stack logos vertically, center on mobile */
-      .header-logos {
-        flex-direction: column;
-        gap: 0.6rem;
-        margin-bottom: 0.1rem;
-        justify-content: center;
-        align-items: center;
-      }
-      .header-logos img {
-        height: 36px !important;
-        margin: 0.08em 0 0.2em 0 !important;
-        padding: 0.16em 0.34em;
-        box-shadow: 0 2px 8px rgba(0,56,102,0.10);
-      }
-      .header-text {
-        padding: 0.1em 0.2em 0 0.2em;
-        font-size: 0.99em;
-      }
       /* Quick Wins card: full width, bigger font, better spacing, check icons */
-      .quick-wins-card {
-        width: 97%;
-        font-size: 1.12rem;
-        padding: 1.3rem 0.7rem 1.3rem 0.8rem;
-        margin-bottom: 1.6rem;
-      }
-      .quick-wins-card h3 {
-        font-size: 1.11em;
-        margin-bottom: 0.8rem;
-        text-align: left;
-        padding-left: 0.1em;
-      }
-      .quick-wins-card li {
-        font-size: 1.07em;
-        margin-bottom: 1.05em;
-        padding-left: 1.7em;
-        position: relative;
-      }
-      .quick-wins-card li::before {
-        content: "✔️";
-        position: absolute;
-        left: 0.3em;
-        top: 0.06em;
-        font-size: 1.13em;
-        color: #2dbd62;
-        line-height: 1.1;
-        margin-right: 0.4em;
-      }
       /* Cards: less padding, more vertical margin */
       .card {
         padding: 1.2rem 0.4rem 1.5rem 0.4rem;
@@ -261,7 +216,7 @@
         border-radius: 0.65rem;
       }
       .copied-check {
-        display: block;
+        display: none;
         margin: 0.4em 0 0 0.2em;
         font-size: 1.09em;
         text-align: left;
@@ -318,8 +273,6 @@
         margin: 1em 0 1.6em 0;
         border-radius: 0.6rem;
       }
-      .header-logos img { height: 38px; padding: 0.13em 0.3em;}
-      .header-logos { gap: 1.2rem; }
       /* Responsive hero-header fix for full width mobile */
       .hero-header {
         width: 100vw !important;
@@ -504,34 +457,6 @@
     h2:hover::after, h2:focus::after {
       width: 84px;
     }
-    .client-branding {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 2.3rem;
-      gap: 0.7rem;
-      min-height: 56px;
-      padding-right: 1rem;
-    }
-    .client-branding img {
-      max-height: 44px;
-      width: auto;
-      filter: drop-shadow(0 3px 8px rgba(0,56,102,0.14));
-      border-radius: 0.4rem;
-      background: #fff;
-      padding: 0.18em 0.34em;
-    }
-    .client-label {
-      font-size: 1.05em;
-      color: var(--brand-blue);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      opacity: 0.96;
-      background: #e8f1fa;
-      border-radius: 0.5em;
-      padding: 0.19em 0.8em 0.15em 0.7em;
-    }
     ul {
       margin-left: 1.8em;
       padding-left: 0.4em;
@@ -638,7 +563,7 @@
       vertical-align: middle;
       position: relative;
       top: 1px;
-      display: inline-block;
+      display: none;
     }
     .copied-check.visible {
       opacity: 1;
@@ -694,21 +619,11 @@
         font-size: 1.01rem;
       }
       main { padding: 1.1rem 0.2rem; }
-      .header-logos img { height: 38px; padding: 0.13em 0.3em;}
-      .header-logos { gap: 1.2rem; }
       .card {
         padding: 2.1rem 0.7rem 2.6rem 0.7rem;
         margin-bottom: 2.6rem;
         font-size: 1em;
         box-shadow: 0 2px 13px rgba(0,56,102,0.08);
-      }
-      .client-branding {
-        justify-content: center;
-        padding-right: 0;
-      }
-      .client-label {
-        font-size: 0.98em;
-        padding: 0.19em 0.65em 0.14em 0.58em;
       }
       .section-header {
         margin-bottom: 1.25rem;
@@ -754,10 +669,6 @@
         font-size: 0.98em;
         padding: 1.3em 0.4em 1.2em 0.4em;
         margin-top: 2.1rem;
-      }
-      /* Remove .quick-wins-card on mobile */
-      .quick-wins-card {
-        display: none !important;
       }
       .toc {
         display: none;
@@ -1093,14 +1004,6 @@
         font-size: 1.23rem;
         box-shadow: 0 2px 13px rgba(0,56,102,0.08);
       }
-      .client-branding {
-        justify-content: center;
-        padding-right: 0;
-      }
-      .client-label {
-        font-size: 0.98em;
-        padding: 0.19em 0.65em 0.14em 0.58em;
-      }
       .section-header {
         margin-bottom: 1.25rem;
       }
@@ -1217,7 +1120,7 @@
   </header>
   <main role="main">
     <!-- Floating Back to Top button -->
-    <button id="backToTopBtn" class="back-to-top-float" aria-label="Back to Top" title="Back to Top" style="display:none;">↑</button>
+    <button type="button" id="backToTopBtn" class="back-to-top-float" aria-label="Back to Top" title="Back to Top" >↑</button>
     <!-- Standard TOC for desktop -->
     <nav class="toc" aria-label="Table of Contents">
       <ul>
@@ -1234,10 +1137,10 @@
       </ul>
     </nav>
     <!-- Mobile TOC Dropdown -->
-    <button class="toc-dropdown-toggle" style="display:none;" aria-expanded="false" aria-controls="toc-dropdown-content">
+    <button type="button" class="toc-dropdown-toggle"  aria-expanded="false" aria-controls="toc-dropdown-content">
       ☰ Table of Contents
     </button>
-    <nav class="toc-dropdown-content" id="toc-dropdown-content" aria-label="Table of Contents" style="display:none;">
+    <nav class="toc-dropdown-content" id="toc-dropdown-content" aria-label="Table of Contents" >
       <ul>
         <li><a class="toc-link" href="#section-1"><span class="section-number">1</span> Quick-Start: What’s This Guide?</a></li>
         <li><a class="toc-link" href="#section-2"><span class="section-number">2</span> How to Use This Guide</a></li>
@@ -1376,9 +1279,9 @@
 • What I want clients to say about me: [INSERT HOW YOU WANT TO BE DESCRIBED]
 • The feeling I want to leave people with: [INSERT FEELING]
 Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I can use for email, LinkedIn, or calls.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
         <hr>
         <h3>The Secret to a Truly Authentic Voice: Add More Context!</h3>
@@ -1394,9 +1297,9 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         </ul>
         <div class="code-block">
           <textarea class="prompt-edit" rows="7">Help me define my personal brand voice for sales outreach. Here are my strengths and values: [paste your answers]. Here’s a short bio/about me: [paste]. Here’s a sample email or content I wrote: [paste]. Clients have said: [paste a testimonial or quote]. Summarize my brand voice as above.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
         <hr>
         <h3>Why Give More Context?</h3>
@@ -1433,9 +1336,9 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         <h3>1. Prospect Outreach Email (Personalized)</h3>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Write a friendly outreach email to a local business owner introducing myself as an AMP Sales and Marketing Solutions (AMP) sales consultant. Make it specific and human, not generic AI content. Reference a recent local event or business milestone if possible.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <div class="pro-tip">
@@ -1447,17 +1350,17 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         <h3>2. Meeting Prep (Discovery Call)</h3>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Give me a 3-bullet prep list for a discovery call with [business name], including one question about their current marketing and one about their goals for 2025.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <h3>3. Quick Local Market Research</h3>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Summarize the biggest advertising opportunities for [business type] in [local area] based on current trends and local events.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <div class="pro-tip">
@@ -1469,17 +1372,17 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         <h3>4. Prospecting LinkedIn Message (Warm)</h3>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Draft a concise LinkedIn message to [prospect name] introducing myself and AMP Sales and Marketing Solutions (AMP). Mention a mutual connection or local event if possible. Ask for a short call about how we help local businesses reach more customers.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <h3>5. Overcoming Objections</h3>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">List three effective, ethical ways to respond when a business says “TV doesn’t work for us.” Focus on data, success stories, and partnership.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <div class="technique open">
@@ -1505,9 +1408,9 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         </div>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Rewrite this sales email to focus on [local event or story], and suggest a question I could ask about their recent business changes.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <h3>2. Voice &amp; Style Tune-Up</h3>
@@ -1518,9 +1421,9 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         </div>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Rewrite this message to sound more like a real AMP Sales and Marketing Solutions (AMP) sales consultant—authentic, helpful, and focused on partnership.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
 
         <h3>3. Quick Customer Research</h3>
@@ -1531,9 +1434,9 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         </div>
         <div class="code-block">
           <textarea class="prompt-edit" rows="3">Summarize the current marketing challenges for [business type] in [local area]—give me three bullet points to reference in my call.</textarea>
-          <button class="copy-btn">Copy</button>
-          <button class="reset-btn">Reset</button>
-          <span class="copied-check" style="display:none;">✔️ Copied!</span>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="reset-btn">Reset</button>
+          <span class="copied-check" >✔️ Copied!</span>
         </div>
         <a href="#top" class="back-to-top">Back to Top ↑</a>
       </section>
@@ -1594,7 +1497,7 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
       }
     });
     backToTopBtn.addEventListener('click', function() {
-      window.location.hash = "#top";
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
     // Fade-in/slide-up effect as sections enter viewport
     const observer = new window.IntersectionObserver((entries, obs) => {
@@ -1645,11 +1548,14 @@ Summarize my brand voice in a list of 3–5 key traits, and a short paragraph I 
         // Store initial value for reset
         textarea.dataset.initial = textarea.value;
         // Copy button
-        copyBtn.addEventListener('click', function(e) {
+        copyBtn.addEventListener('click', async function(e) {
           e.preventDefault();
-          textarea.select();
-          document.execCommand('copy');
-          // Feedback
+          try {
+            await navigator.clipboard.writeText(textarea.value);
+          } catch (err) {
+            textarea.select();
+            document.execCommand("copy");
+          }
           check.style.display = 'inline-block';
           setTimeout(() => { check.classList.add('visible'); }, 10);
           setTimeout(() => {
