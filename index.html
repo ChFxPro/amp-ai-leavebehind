@@ -192,6 +192,7 @@
         --color-bg: var(--brand-white-alt);
         --color-card: var(--brand-white);
         --color-text: #142033;
+        --nautical-bg: url('data:image/svg+xml;utf8,<svg width="800" height="800" xmlns="http://www.w3.org/2000/svg"><g stroke="%23598bcf" stroke-width="1" opacity="0.09"><rect width="800" height="800" fill="none"/><path d="M0,50 Q200,110 400,70 T800,90" stroke-dasharray="6 10"/><path d="M0,200 Q160,300 320,240 T800,210" stroke-dasharray="3 8"/><circle cx="400" cy="400" r="350" fill="none" stroke-dasharray="2 13"/><line x1="0" y1="400" x2="800" y2="400" stroke-dasharray="8 7"/><line x1="400" y1="0" x2="400" y2="800" stroke-dasharray="8 7"/></g></svg>');
       }
       @media (prefers-color-scheme: dark) {
         :root {
@@ -208,8 +209,10 @@
         margin: 0;
         padding: 0;
         background-color: var(--color-bg);
-        background-image: var(--body-pattern);
-        background-size: 600px;
+        background-image: var(--nautical-bg), var(--body-pattern);
+        background-blend-mode: lighten;
+        background-size: 800px 800px, 600px;
+        background-repeat: repeat, repeat;
         background-attachment: fixed;
         color: var(--color-text);
         font-family: var(--font);
@@ -928,7 +931,7 @@
           overflow-x: hidden !important;
         }
       }
-      /* Callout styles with icons */
+      /* Callout styles with icons - unified and clean (single framing, no double border/shadow) */
       .pro-tip,
       .technique {
         border-radius: 0.85rem;
@@ -937,9 +940,9 @@
         font-size: 1.17em;
         position: relative;
         animation: tip-fade-in 1.2s;
-        box-shadow: 0 4px 18px rgba(255, 200, 87, 0.1);
         display: flex;
         align-items: flex-start;
+        box-shadow: 0 2px 10px rgba(255,200,87,0.06);
       }
       .pro-tip {
         cursor: default;
@@ -955,7 +958,7 @@
         margin: 2.5em 0 3.2em 0;
         padding: 1.5em 1.7em 1.5em 1.7em;
         font-size: 1.05em; /* scaled down */
-        box-shadow: 0 4px 18px rgba(255, 200, 87, 0.1);
+        box-shadow: none;
         display: block;
         align-items: flex-start;
       }
@@ -971,7 +974,7 @@
         background: var(--pro-tip-bg);
         border-left: 7px solid var(--brand-blue-accent);
         color: var(--brand-blue-accent);
-        box-shadow: 0 4px 18px rgba(0, 56, 102, 0.13);
+        box-shadow: none;
       }
       .technique::before {
         content: "üõ†Ô∏è";
@@ -988,7 +991,7 @@
         margin: 2.5em 0 3.2em 0;
         padding: 1.7em 2em 1.7em 2em;
         font-size: 1.17em;
-        box-shadow: 0 4px 18px rgba(0, 56, 102, 0.16);
+        box-shadow: none;
         animation: tip-fade-in 1.2s;
         position: relative;
         color: var(--brand-blue-accent);
@@ -1037,10 +1040,13 @@
         }
       }
       /* TOC styles */
+      .toc,
+      .toc-dropdown-content {
+        background: rgba(233,241,254,0.98);
+        border-radius: 1.5em;
+        box-shadow: 0 4px 30px #001a34cc;
+      }
       .toc {
-        background: var(--brand-white-alt);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
         padding: 2.3rem 2.7rem;
         margin-bottom: 4.2rem;
         font-size: 1.22rem;
@@ -1054,10 +1060,14 @@
       .toc li {
         margin-bottom: 1.25em;
       }
+      .toc-link,
+      .toc .section-number {
+        font-weight: 800;
+        text-shadow: none;
+      }
       .toc-link {
         text-decoration: none;
         color: var(--brand-blue);
-        font-weight: 800;
         transition:
           color 0.2s ease,
           background 0.2s;
@@ -1068,15 +1078,12 @@
       }
       .toc-link:hover,
       .toc-link:focus {
-        text-decoration: underline;
-        color: var(--brand-gold);
-        outline-offset: 2px;
-        background: var(--color-bg);
+        color: #ffc857;
+        background: #e8f7ff;
       }
       /* Section number in TOC */
       .toc .section-number {
         color: var(--brand-gold);
-        font-weight: 700;
         margin-right: 0.7em;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         user-select: none;
@@ -1292,6 +1299,140 @@
       .prompt-instructions li {
         margin-bottom: 0.5em;
       }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --body-pattern: var(--body-pattern-dark);
+        --color-bg: #101a24;
+        --color-card: #232f3e;
+        --color-text: #f6faff;
+        --nautical-bg: url('data:image/svg+xml;utf8,<svg width="800" height="800" xmlns="http://www.w3.org/2000/svg"><g stroke="%23598bcf" stroke-width="0.8" opacity="0.09"><rect width="800" height="800" fill="none"/><path d="M0,40 Q160,100 320,60 T800,80" stroke-dasharray="5 8"/><path d="M0,120 Q180,200 360,140 T800,170" stroke-dasharray="3 6"/><path d="M0,200 Q160,300 320,240 T800,210" stroke-dasharray="2 7"/><circle cx="400" cy="400" r="350" fill="none" stroke-dasharray="2 11"/><circle cx="400" cy="400" r="250" fill="none" stroke-dasharray="2 9"/><line x1="0" y1="400" x2="800" y2="400" stroke-dasharray="6 6"/><line x1="400" y1="0" x2="400" y2="800" stroke-dasharray="6 6"/></g></svg>');
+      }
+      .toc, .toc-dropdown-content {
+        background: rgba(24,40,72,0.93) !important;
+        border-radius: 1.5em !important;
+        box-shadow: 0 4px 30px #001a34cc !important;
+      }
+      .toc-link, .toc .section-number {
+        color: #fff !important;
+        text-shadow: none !important;
+        font-weight: 800;
+      }
+      .toc-link:hover, .toc-link:focus {
+        color: #ffc857 !important;
+        background: #223358 !important;
+      }
+      .card {
+        background: #192232 !important;
+        color: #f8faff !important;
+        border-color: #27496d !important;
+        box-shadow: 0 6px 28px #0006 !important;
+      }
+      h2 {
+        color: #ffe06b !important;
+        border-bottom: 2.2px solid #4ea3d8 !important;
+      }
+      .section-number {
+        color: #ffe06b !important;
+        background: #182840 !important;
+        text-shadow: none !important;
+      }
+      .copy-btn, .reset-btn {
+        color: #192232 !important;
+        background: #ffc857 !important;
+      }
+      /* Unified callout style for .pro-tip, .technique, .ethics in dark mode */
+      .pro-tip,
+      .pro-tip .callout-content {
+        background: #232f3e !important;
+        color: #ffd370 !important;
+        border-left: 7px solid #ffc857 !important;
+        box-shadow: none !important;
+      }
+      .technique,
+      .technique .callout-content {
+        background: #232f3e !important;
+        color: #ffeebc !important;
+        border-left: 7px solid #4ea3d8 !important;
+        box-shadow: none !important;
+      }
+      .ethics,
+      .ethics .callout-content {
+        background: #233040 !important;
+        color: #ffeebc !important;
+        border-left: 7px solid #4ea3d8 !important;
+        box-shadow: none !important;
+      }
+      /* Remove double border/shadow on callouts */
+      .pro-tip,
+      .pro-tip .callout-content,
+      .technique,
+      .technique .callout-content,
+      .ethics,
+      .ethics .callout-content {
+        border-radius: 0.85rem !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+      }
+      /* Improved .prompt-instructions for contrast/readability */
+      .prompt-instructions {
+        background: #182230 !important;
+        color: #ffd370 !important;
+        border-left: 5px solid #ffc857 !important;
+        box-shadow: none !important;
+      }
+      /* .back-to-top: gold, bold, text-shadow for visibility */
+      .back-to-top {
+        color: #ffc857 !important;
+        font-weight: 900 !important;
+        text-shadow: 0 1px 8px #222c, 0 0px 2px #000a;
+        border-bottom: 2.5px solid transparent;
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .back-to-top:hover,
+      .back-to-top:focus {
+        border-color: #ffeebc !important;
+        color: #fffbe7 !important;
+      }
+      /* Code blocks and prompt-edit in dark mode: high contrast, no glow/double border */
+      .code-block {
+        background: #182230 !important;
+        border: 1.7px solid #27496d !important;
+        color: #ffeebc !important;
+        box-shadow: none !important;
+      }
+      .prompt-edit {
+        background: #182230 !important;
+        border: 1.5px solid #27496d !important;
+        color: #ffeebc !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+      }
+      /* Also increase font-weight for .code-block text */
+      .code-block,
+      .code-block textarea {
+        font-weight: 600 !important;
+      }
+      body, html {
+        background-image: var(--nautical-bg), var(--body-pattern-dark) !important;
+        background-blend-mode: lighten !important;
+        background-size: 800px 800px, 600px !important;
+        background-repeat: repeat, repeat !important;
+        background-attachment: fixed, fixed !important;
+      }
+    }
+
+    .hero-header-overlay {
+      opacity: 0.33 !important;
+      filter: brightness(1.12) contrast(1.18);
+    }
+    @media (prefers-color-scheme: dark) {
+      .hero-header-overlay {
+        opacity: 0.38 !important;
+        filter: brightness(0.94) contrast(1.22);
+        mix-blend-mode: lighten !important;
+      }
+    }
     </style>
   </head>
   <body>
@@ -2076,9 +2217,9 @@ Summarize the current marketing challenges for [business type] in [local area]‚Ä
         const applyParallax = () => {
           const scrolled = window.scrollY;
           if (overlay)
-            overlay.style.transform = `translateY(${scrolled * 0.3}px)`;
+            overlay.style.transform = `translateY(${scrolled * 0.5}px)`;
           parallaxEls.forEach((el) => {
-            const speed = parseFloat(el.dataset.parallax) || 0.1;
+            const speed = parseFloat(el.dataset.parallax) || 0.18;
             el.style.transform = `translateY(${scrolled * speed}px)`;
           });
         };
@@ -2148,3 +2289,7 @@ Summarize the current marketing challenges for [business type] in [local area]‚Ä
     </script>
   </body>
 </html>
+    /* General card shadow for both modes */
+    .card {
+      box-shadow: 0 6px 28px #0006;
+    }
