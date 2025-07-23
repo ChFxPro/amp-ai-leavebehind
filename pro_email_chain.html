@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Email Thread</title>
+  <style>
+    body {
+      background-color: #f1f3f4;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .email-app {
+      display: flex;
+      flex-direction: row;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      min-height: 700px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .gmail-header-bar {
+      background-color: #202124;
+      color: #e8eaed;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .gmail-logo {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .gmail-search {
+      background-color: #303134;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      color: #bdc1c6;
+      font-size: 0.9rem;
+    }
+
+    .gmail-profile {
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+
+    .gmail-tabs {
+      display: flex;
+      border-bottom: 1px solid #dadce0;
+      background-color: #fff;
+      padding: 0.25rem 1rem;
+    }
+
+    .gmail-tabs .tab {
+      margin-right: 1.5rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.9rem;
+      color: #5f6368;
+      border-radius: 6px 6px 0 0;
+      cursor: pointer;
+    }
+
+    .gmail-tabs .tab.active {
+      border: 1px solid #dadce0;
+      border-bottom: none;
+      color: #1a73e8;
+      background-color: #fff;
+      font-weight: bold;
+    }
+
+    .inbox-label {
+      letter-spacing: 0.5px;
+    }
+
+    .email-actions {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .email-thread {
+      background-color: #fff;
+      max-width: 100%;
+      margin: 0;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(60,64,67,0.06);
+    }
+    .email-sidebar {
+      background-color: #f6f8fc;
+      width: 220px;
+      padding: 1rem;
+      border-right: 1px solid #d3d3d3;
+    }
+
+    .sidebar-header {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-nav li {
+      padding: 0.5rem 0;
+      color: #444;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-nav li:hover {
+      color: #1a73e8;
+    }
+
+    .email-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .email {
+      border-top: 1px solid #f1f3f4;
+      padding: 1.5rem 2.2rem 1.3rem 2.2rem;
+      font-size: 1.01rem;
+    }
+
+    .email:first-child {
+      border-top: none;
+    }
+
+    .email-header {
+      margin-bottom: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .email-header strong {
+      font-weight: 500;
+      font-size: 1.05rem;
+      margin-bottom: 0.18rem;
+      color: #1a202c;
+      letter-spacing: 0.01em;
+    }
+
+    .email-meta {
+      font-size: 0.89rem;
+      color: #5f6368;
+      line-height: 1.5;
+      margin-bottom: 0.16rem;
+    }
+
+    .email-body {
+      white-space: pre-wrap;
+      font-size: 1.04rem;
+      color: #222;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+    #copyAllBtn {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.2s ease;
+    }
+
+    #copyAllBtn:hover {
+      background-color: #0f5bb5;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-app">
+    <div class="email-sidebar">
+      <div class="sidebar-header">📥 Mailbox</div>
+      <ul class="sidebar-nav">
+        <li>Inbox</li>
+        <li>Starred</li>
+        <li>Sent</li>
+        <li>Drafts</li>
+        <li>Trash</li>
+      </ul>
+    </div>
+    <div class="email-main">
+      <div class="gmail-header-bar">
+        <div class="gmail-logo">📧 Gmail</div>
+        <div class="gmail-search">Search mail 🔍</div>
+        <div class="gmail-profile">🟢 Active ▾</div>
+      </div>
+      <div class="gmail-tabs">
+        <span class="tab active">Primary</span>
+        <span class="tab">Social</span>
+        <span class="tab">Promotions</span>
+      </div>
+      <div class="email-thread">
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Haley Mendez &lt;haley@greenrootsorganics.com&gt;</strong>
+            <div class="email-meta">
+              To: Brian Tucker &lt;btucker@wlos.com&gt;<br />
+              Cc: Janet Westfield &lt;janet@greenrootsorganics.com&gt;, graphics@greenrootsorganics.com<br />
+              Date: Thursday, July 11, 2025 at 3:08 PM<br />
+              Subject: Fall Campaign Kickoff – Creative Needs
+            </div>
+          </div>
+          <div class="email-body">
+Hi Brian,
+
+Hope all’s well! We’re ready to start our fall push. A few quick notes to get things moving:
+
+• Spotlight our local farms and family-owned story  
+• Needs to be warm, grounded—not slick or salesy  
+• Avoid using the word “cheap”—go with “affordable” if needed  
+• Probably a :30 TV but might need a :15 for social—TBD
+
+We’re thinking apples, pumpkins, “fresh for fall” feel—but *no corn this year* please (branding reasons).
+
+Also: attached is our updated logo (file name might be: GRO_finalLeafLogo_USETHISv2for2025_Vert.png).
+
+Let us know next steps!
+
+Best,  
+Haley
+          </div>
+        </div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Brian Tucker &lt;btucker@wlos.com&gt;</strong>
+    <div class="email-meta">
+      To: Haley Mendez &lt;haley@greenrootsorganics.com&gt;<br />
+      Cc: Janet Westfield &lt;janet@greenrootsorganics.com&gt;<br />
+      Date: Friday, July 12, 2025 at 9:20 AM<br />
+      Subject: Re: Fall Campaign Kickoff – Creative Needs
+    </div>
+  </div>
+  <div class="email-body">
+Hi Haley, Janet—
+
+Thanks for this! We love the fall harvest vibe. Our recommendation:
+
+• :30 spot as primary deliverable  
+• :15 social cutdown with light variation  
+• Vertical & 16x9 framing (we’ll plan both)  
+• Warm, acoustic VO tone (we can try a female and male option)
+
+Quick Qs before we draft creative:  
+- Final tagline? We had “Fresh is a Family Value” from spring—is that still current?  
+- Any hard dates we should build around?  
+- Want us to match the logo font in titles or try something cleaner?
+
+Also, can we confirm brand colors? Hex or CMYK would be ideal.
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Haley Mendez &lt;haley@greenrootsorganics.com&gt;</strong>
+    <div class="email-meta">
+      To: Brian Tucker &lt;btucker@wlos.com&gt;<br />
+      Date: Friday, July 12, 2025 at 11:56 AM<br />
+      Subject: Re: Fall Campaign Kickoff – Creative Needs
+    </div>
+  </div>
+  <div class="email-body">
+Hey! A few answers:
+
+• Yes, please use “Fresh is a Family Value”  
+• Prefer female VO with a warm “kitchen table” tone  
+• Target flight start is Aug 10  
+• Fonts—we like what the logo uses (“Greenridge” maybe?) but open to recs  
+• Primary green: I think it’s #6D8F53. Janet may know for sure
+
+Also—Janet wants us to make sure the spot shows the new farmstand booth we just opened. I’ll see if we have photos.
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Janet Westfield &lt;janet@greenrootsorganics.com&gt;</strong>
+    <div class="email-meta">
+      To: Haley Mendez &lt;haley@greenrootsorganics.com&gt;, Brian Tucker &lt;btucker@wlos.com&gt;<br />
+      Date: Friday, July 12, 2025 at 12:03 PM<br />
+      Subject: Re: Fall Campaign Kickoff – Creative Needs
+    </div>
+  </div>
+  <div class="email-body">
+Just weighing in real quick:
+
+• Please do NOT use the “Fresh is a Family Value” tagline on the final frame—we’re testing a new message  
+• I’d prefer a slightly more modern font than Greenridge if we can try a few  
+• Apple imagery is fine, but no pears (they’re out of stock indefinitely)
+
+Thanks!  
+– Janet
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Brian Tucker &lt;btucker@wlos.com&gt;</strong>
+    <div class="email-meta">
+      To: Haley Mendez &lt;haley@greenrootsorganics.com&gt;, Janet Westfield &lt;janet@greenrootsorganics.com&gt;<br />
+      Date: Monday, July 15, 2025 at 9:01 AM<br />
+      Subject: Re: Fall Campaign Kickoff – VO Draft and Outline
+    </div>
+  </div>
+  <div class="email-body">
+Hi team,
+
+Attached is the initial VO draft + visual outline for :30:
+
+“Fall is here—and so is the freshest local harvest. At GreenRoots Organics, we’ve been family-owned since 1998, bringing organic, affordable produce to your table. Find us at Ingles, Earth Fare, and local co-ops.”
+
+CTA: “Visit GreenRootsOrganics.com to taste the season.”
+
+Questions:  
+• Should we still say “organic” now that you’re adding snacks and shelf-stable products?  
+• Can we mention same-day harvests again, or is that still a no-go?
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Haley Mendez &lt;haley@greenrootsorganics.com&gt;</strong>
+    <div class="email-meta">
+      To: Brian Tucker &lt;btucker@wlos.com&gt;<br />
+      Date: Monday, July 15, 2025 at 10:47 AM<br />
+      Subject: Re: Fall Campaign Kickoff – VO Draft and Outline
+    </div>
+  </div>
+  <div class="email-body">
+Hi!
+
+Love the tone. A few edits:
+
+• Say “Blue Ridge foothills” instead of WNC  
+• Remove mention of shelf-stable products for now  
+• Yes—Janet says we can say same-day harvest again  
+• And we want to add “Family-owned since 1998” as an on-screen super, not just in VO
+
+We’ll get logo AI file to you today.
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Janet Westfield &lt;janet@greenrootsorganics.com&gt;</strong>
+    <div class="email-meta">
+      To: Brian Tucker &lt;btucker@wlos.com&gt;<br />
+      Date: Monday, July 15, 2025 at 3:05 PM<br />
+      Subject: Re: Fall Campaign Kickoff – VO Update
+    </div>
+  </div>
+  <div class="email-body">
+Quick correction—let’s NOT mention “same-day harvest” anymore. Legal team flagged this as a problem due to weather unpredictability.
+
+Also—please increase logo size by 15% in final frame. And center it above the tagline, not below.
+
+Last thing: VO sounds a little “soft.” Can we try a version with slightly more “energy”?
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Brian Tucker &lt;btucker@wlos.com&gt;</strong>
+    <div class="email-meta">
+      To: Haley Mendez &lt;haley@greenrootsorganics.com&gt;, Janet Westfield &lt;janet@greenrootsorganics.com&gt;<br />
+      Date: Tuesday, July 16, 2025 at 8:00 AM<br />
+      Subject: Re: Fall Campaign Kickoff – Final Edits
+    </div>
+  </div>
+  <div class="email-body">
+No problem—removing “same-day harvest” again 😅
+
+Here’s updated VO v2:
+
+“This fall, let your table reflect the season. At GreenRoots Organics, we’ve been family-owned since 1998—growing trusted, organic produce in the Blue Ridge foothills. Taste the season at GreenRootsOrganics.com.”
+
+We’ve bumped logo size and added an upbeat VO take. Final animations coming Friday.  
+Please confirm:
+
+• Final URL spelling (GreenRootsOrganics.com or GreenRootsNC.com?)  
+• Use of tagline or no tagline? (We now have three versions…)  
+• Acoustic guitar underscore OK, or should we try piano?
+  </div>
+</div>
+
+<div class="email">
+  <div class="email-header">
+    <strong>From: Haley Mendez &lt;haley@greenrootsorganics.com&gt;</strong>
+    <div class="email-meta">
+      To: Brian Tucker &lt;btucker@wlos.com&gt;<br />
+      Date: Tuesday, July 16, 2025 at 12:22 PM<br />
+      Subject: Re: Fall Campaign Kickoff – Final Edits
+    </div>
+  </div>
+  <div class="email-body">
+Thanks, Brian.
+
+Confirmed:  
+• URL is GreenRootsFamily.com now 😬  
+• Use tagline only in :30, not in :15  
+• Guitar is perfect—do not use piano, please
+
+And final final logo is coming from our designer today. Ignore the “USETHISONE.png” file. Sorry.
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Janet Westfield &lt;janet@greenrootsorganics.com&gt;</strong>
+            <div class="email-meta">
+              To: Haley Mendez, Brian Tucker<br />
+              Date: Tuesday, July 16, 2025 at 4:37 PM<br />
+              Subject: Re: Fall Campaign Kickoff – Final Final Files
+            </div>
+          </div>
+          <div class="email-body">
+Hi—quick note:
+
+The final-final logo file we sent has a transparent background, but it’s showing up black on some devices. Can you flatten to white in the :15?
+
+Also: my niece might be in town this week. If we want any farm b-roll with kids, we can try Thursday or Friday morning.
+
+Thanks!  
+– Janet
+          </div>
+        </div>
+
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Brian Tucker &lt;btucker@wlos.com&gt;</strong>
+            <div class="email-meta">
+              To: Janet Westfield<br />
+              Date: Wednesday, July 17, 2025 at 8:02 AM<br />
+              Subject: Re: Fall Campaign Kickoff – Logo Update / B-roll Note
+            </div>
+          </div>
+          <div class="email-body">
+Hey Janet,
+
+Thanks! We’ll switch logo background to white for social cuts. Re: kids on camera, we’ll need a signed release on file—even for family.
+
+Also, any chance we can get a .WAV of your voicemail greeting? Our editor was trying to match tone 😄
+          </div>
+        </div>
+
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Haley Mendez &lt;haley@greenrootsorganics.com&gt;</strong>
+            <div class="email-meta">
+              To: Brian Tucker<br />
+              Date: Wednesday, July 17, 2025 at 9:21 AM<br />
+              Subject: Re: Fall Campaign Kickoff – WAV + Edits
+            </div>
+          </div>
+          <div class="email-body">
+Brian—
+
+Haha re: voicemail. That’s amazing.
+
+Unrelated, Janet wanted to know if we can “warm up” the shadows in the background field shot. Her words, not mine.
+
+Also also: does the :15 still use the same super timing? Janet thinks it might be off by a frame. Can we review?
+          </div>
+        </div>
+
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Janet Westfield &lt;janet@greenrootsorganics.com&gt;</strong>
+            <div class="email-meta">
+              To: Team<br />
+              Date: Wednesday, July 17, 2025 at 11:12 AM<br />
+              Subject: Re: Fall Campaign Kickoff – Tagline + Color Check
+            </div>
+          </div>
+          <div class="email-body">
+Can we just pause for one sec—can someone re-send the tagline options? I lost track of which was which.
+
+Also: is our green more “forest” or “olive”? The final frame feels too “lettuce-y.”
+
+And has anyone heard from our farm liaison about the apple orchard release form?
+
+– J
+          </div>
+        </div>
+
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Brian Tucker &lt;btucker@wlos.com&gt;</strong>
+            <div class="email-meta">
+              To: Janet Westfield, Haley Mendez<br />
+              Date: Wednesday, July 17, 2025 at 1:34 PM<br />
+              Subject: Re: Fall Campaign Kickoff – Version Clarification
+            </div>
+          </div>
+          <div class="email-body">
+Hi both,
+
+We’re now tracking five versions:
+
+1. :30 with tagline  
+2. :30 without tagline  
+3. :30 with voiceover and on-screen text (logo top)  
+4. :15 cutdown with tagline  
+5. :15 cutdown without tagline
+
+Also one more question: do you want the VO to say “dot com” or just show it on screen?
+
+Also Haley—can you clarify what “the yellow version of the logo” is? We only received the green.
+          </div>
+        </div>
+
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Haley Mendez &lt;haley@greenrootsorganics.com&gt;</strong>
+            <div class="email-meta">
+              To: Brian Tucker<br />
+              Date: Wednesday, July 17, 2025 at 2:16 PM<br />
+              Subject: Re: Fall Campaign Kickoff – Yellow Logo?
+            </div>
+          </div>
+          <div class="email-body">
+LOL I have no idea what I meant by “yellow version.” Ignore that entirely 😅
+
+Dot com can be shown only—no need to say it out loud.
+
+Also I think we’re leaning toward tagline in :30 but not in :15—will confirm tonight.
+          </div>
+        </div>
+
+        <div class="email">
+          <div class="email-header">
+            <strong>From: Janet Westfield &lt;janet@greenrootsorganics.com&gt;</strong>
+            <div class="email-meta">
+              To: Brian Tucker, Haley Mendez<br />
+              Date: Thursday, July 18, 2025 at 8:11 AM<br />
+              Subject: Re: Fall Campaign Kickoff – Final FINAL Notes
+            </div>
+          </div>
+          <div class="email-body">
+Okay, I watched everything again.
+
+Final notes (I promise):
+
+• Please make logo “30% more centered” (yes I know that’s not a thing)  
+• Use “satisfyingly crunchy” instead of “farm fresh” in VO line 2  
+• In :15, can we try piano underscore after all? (Just want to hear it)
+
+Also: Haley’s niece did great in the orchard shots!! Can we blur the other kid in the background? We don’t have a release.
+          </div>
+        </div>
+</div>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <button id="copyAllBtn">📋 COPY ENTIRE THREAD</button>
+        <div id="copyMessage" style="margin-top: 0.5rem; font-size: 0.9rem; color: green;"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('copyAllBtn').addEventListener('click', () => {
+      const threadText = document.querySelector('.email-thread').innerText;
+      navigator.clipboard.writeText(threadText).then(() => {
+        document.getElementById('copyMessage').textContent = "✅ Copied to clipboard!";
+        setTimeout(() => {
+          document.getElementById('copyMessage').textContent = "";
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
