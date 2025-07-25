@@ -1511,6 +1511,82 @@
       <div class="hero-header-overlay" aria-hidden="true"></div>
     </header>
     <main role="main">
+      <!-- Quick Access Buttons Row -->
+      <div class="main-action-buttons-row" style="display: flex; gap: 2.2rem; margin-bottom: 2.7rem; justify-content: stretch; align-items: stretch; flex-wrap: wrap;">
+        <a
+          href="presentation.html"
+          class="main-action-btn"
+          aria-label="View Interactive Slide Deck"
+          style="flex: 1 1 0; background: var(--brand-gold); color: #233255; font-weight: 900; font-size: 1.33rem; border-radius: 1.2em; text-align: center; padding: 1.1em 0.7em; margin: 0; box-shadow: 0 2px 13px rgba(0,56,102,0.08); border: none; text-decoration: none; transition: background 0.18s, color 0.18s; display: flex; align-items: center; justify-content: center;"
+        >
+          View Interactive Slide Deck
+        </a>
+        <a
+          href="https://chatgpt.com/g/g-688024b8bacc8191a86cc4f439b4eb6f-hand-off"
+          class="main-action-btn"
+          aria-label="Hand OFF Custom GPT"
+          target="_blank"
+          rel="noopener"
+          style="flex: 1 1 0; background: var(--brand-gold); color: #233255; font-weight: 900; font-size: 1.33rem; border-radius: 1.2em; text-align: center; padding: 1.1em 0.7em; margin: 0; box-shadow: 0 2px 13px rgba(0,56,102,0.08); border: none; text-decoration: none; transition: background 0.18s, color 0.18s; display: flex; align-items: center; justify-content: center;"
+        >
+          Hand&bull;OFF Custom GPT
+        </a>
+      </div>
+    <style>
+      /* Main Action Buttons Row and Buttons */
+      .main-action-buttons-row {
+        display: flex;
+        gap: 2.2rem;
+        margin-bottom: 2.7rem;
+        justify-content: stretch;
+        align-items: stretch;
+        flex-wrap: wrap;
+      }
+      .main-action-btn {
+        flex: 1 1 0;
+        background: var(--brand-gold);
+        color: #233255;
+        font-weight: 900;
+        font-size: 1.33rem;
+        border-radius: 1.2em;
+        text-align: center;
+        padding: 1.1em 0.7em;
+        margin: 0;
+        box-shadow: 0 2px 13px rgba(0,56,102,0.08);
+        border: none;
+        text-decoration: none;
+        transition: background 0.18s, color 0.18s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        min-height: 62px;
+        letter-spacing: 0.03em;
+        outline: none;
+        cursor: pointer;
+      }
+      .main-action-btn:hover,
+      .main-action-btn:focus {
+        background: #ffe299;
+        color: #003866;
+        outline: 2px solid var(--brand-blue);
+        text-decoration: none;
+      }
+      @media (max-width: 700px) {
+        .main-action-buttons-row {
+          flex-direction: column;
+          gap: 1.2rem;
+          margin-bottom: 1.7rem;
+        }
+        .main-action-btn {
+          width: 100%;
+          min-width: 0;
+          font-size: 1.09rem;
+          border-radius: 0.95em;
+          padding: 1.05em 0.4em;
+        }
+      }
+    </style>
       <!-- Floating Back to Top button -->
       <button
         type="button"
