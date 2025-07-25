@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AMP AI Training – Annotated Deck</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(120deg, #141a24 65%, #235287 100%);
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+    }
+    .slide-frame {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 32px 0 12px 0;
+    }
+    .slide-img {
+      max-width: 740px;
+      margin-bottom: 32px;
+    }
+    .nav-arrows {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 28px;
+    }
+    .nav-btn {
+      font-size: 2.6em;
+      padding: 0 28px;
+      background: #ffe478;
+      color: #1d2330;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.14s;
+      box-shadow: 0 1px 8px rgba(20,24,30,0.10);
+    }
+    .nav-btn:disabled {
+      opacity: 0.38;
+      cursor: default;
+    }
+    .slide-counter {
+      font-size: 1.13em;
+      letter-spacing: 0.07em;
+      margin-left: 12px;
+      color: #ffe478;
+    }
+    .annotation-block {
+      max-width: 1150px;
+      padding: 48px 60px 38px 60px;
+      margin-top: 0;
+      margin-bottom: 54px;
+      background: rgba(24,28,36,0.96);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(20,24,30,0.11);
+      font-size: 1.21em;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .annotation-block h2 {
+      font-size: 2.18em;
+      margin-bottom: 0.4em;
+      font-weight: 700;
+      color: #ffe478;
+      margin-top: 0;
+    }
+    .annotation-block h3 {
+      font-size: 1.26em;
+      margin: 2em 0 0.6em 0;
+      color: #ffe478;
+    }
+    .prompt-block {
+      font-size: 1.17em;
+      padding: 16px 20px;
+      margin: 19px 0 8px 0;
+      background: #222a33;
+      color: #fff;
+      border-radius: 9px;
+      line-height: 1.46;
+      border: 1.5px solid #333849;
+      word-break: break-word;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      display: block;
+    }
+    .copy-btn {
+      display: block;
+      font-size: 1.09em;
+      margin: 10px 0 18px 0;
+      width: fit-content;
+      background: #ffe478;
+      color: #181c24;
+      border: none;
+      border-radius: 7px;
+      font-weight: bold;
+      padding: 6px 17px;
+      cursor: pointer;
+      transition: background 0.13s;
+    }
+    .copy-btn:hover { background: #fff2a1; }
+    @media (max-width: 1100px) {
+      .annotation-block { padding: 28px 5vw 18px 5vw; }
+      .slide-img { max-width: 99vw; }
+    }
+    @media (max-width: 700px) {
+      .annotation-block { font-size: 1em; padding: 13px 2vw 10px 2vw; }
+      .annotation-block h2 { font-size: 1.32em; }
+      .slide-img { max-width: 99vw; }
+      .copy-btn { font-size: 1em; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-frame">
+    <img id="slide-img" class="slide-img" src="" alt="Slide" />
+  </div>
+  <div class="nav-arrows">
+    <button id="prevBtn" class="nav-btn">&larr;</button>
+    <span class="slide-counter" id="slide-counter"></span>
+    <button id="nextBtn" class="nav-btn">&rarr;</button>
+  </div>
+  <div class="annotation-block" id="annotation-block">
+    <!-- Dynamic annotation content here -->
+  </div>
+  <script>
+    // Slides
+    const slideCount = 10;
+    const slidePrefix = "slides/AMP Ai Training Slide Deck.";
+    const slideExt = ".jpeg";
+
+    // Annotations: update this array to match your slides!
+    const annotations = [
+      {
+        title: "Welcome & Context",
+        content: `
+    <p><strong>Presenter:</strong> Jeff Bannister, North Bend Consulting</p>
+    <p><strong>What This Deck Is:</strong> More than a recap—it's your hands-on reference for using AI <em>your way</em> in sales, prospecting, and client work.</p>
+    <ul>
+      <li>Each slide has walk-throughs, real prompts, and tips from the AMP Sales Team AI training.</li>
+      <li><strong>Use:</strong> Browse for inspiration, or copy prompts directly into ChatGPT—adapt as needed.</li>
+    </ul>
+    <p style="color:#ffe478;"><strong>Pro Tip:</strong> Think of your AI like a junior teammate in another office: clear, kind, and detailed requests get the best results.</p>
+  `
+      },
+      {
+        title: "Personal Story: Why AI?",
+        content: `
+    <p><strong>My AI Origin Story:</strong><br>
+    As a neurodivergent leader, AI finally let me work <em>my way</em>—more creatively, with less burnout, and on my own terms.</p>
+    <p>It can do the same for you—whether you’re a power seller, detail person, or creative thinker.</p>
+    <p style="color:#ffe478;"><strong>Pro Tip:</strong> Treat your AI assistant with the same patience and politeness you’d use for a human coworker. It really does help steer results (and it feels better, too).</p>
+  `
+      },
+      {
+        title: "Hand•OFF Demo: From Messy Emails to Production Clarity",
+        content: `
+<a href="pro_email_chain.html" target="_blank" style="display:inline-block;margin-bottom:22px;">
+  <button style="font-size:1.09em;padding:8px 24px;font-weight:bold;background:#ffe478;color:#181c24;border:none;border-radius:7px;box-shadow:0 1px 6px rgba(20,24,30,0.09);cursor:pointer;">
+    View Demo Email Chain
+  </button>
+</a>
+<p><strong>Challenge:</strong> Sales and Production talk past each other. Messy email chains = mistakes, missed details, wasted time.</p>
+  <ol style="margin-left:0;">
+    <li>
+      <h3 style="margin-top:1.4em;">Step 1: Summarize the Chaos</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Don’t clean up or summarize the email chain yourself. Just paste it in as-is—AI is best at turning real-world chaos into an actionable brief and clear deliverables table.
+      </div>
+      <pre class="prompt-block">Turn this email chain into a clear production brief with a deliverables table.
+
+[PASTE EMAIL CHAIN HERE]</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Turn this email chain into a clear production brief with a deliverables table.\\n\\n[PASTE EMAIL CHAIN HERE]');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 2: Rewrite for Clients</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Make the update readable and trustworthy for the client—remove internal lingo, focus on clarity, and keep promises realistic.
+      </div>
+      <pre class="prompt-block">Rewrite this production brief as a friendly, client-facing update. Avoid jargon and don’t overpromise.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Rewrite this production brief as a friendly, client-facing update. Avoid jargon and don’t overpromise.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 3: Get Role-Specific Briefs</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Each production role needs different info. This step creates a targeted brief for each specialist, cutting confusion and saving time.
+      </div>
+      <pre class="prompt-block">Make three separate briefs: one for the Director, one for the Editor, one for the Audio Engineer. Give only what each person needs, nothing extra.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Make three separate briefs: one for the Director, one for the Editor, one for the Audio Engineer. Give only what each person needs, nothing extra.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 4: Find the “Why” (North Star)</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Every project has an emotional or strategic “why.” Asking for this aligns both sales and production on what matters most.
+      </div>
+      <pre class="prompt-block">In one sentence, what’s the big emotional driver or outcome of this campaign? Rewrite for Sales and Production to align on the “north star.”</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('In one sentence, what’s the big emotional driver or outcome of this campaign? Rewrite for Sales and Production to align on the “north star.”');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+  </ol>
+  <div style="margin-top:2em;"><strong>Takeaway:</strong> These steps show how to go from chaos to clarity—copy, use, and remix for any complex handoff in your workflow.</div>
+`
+      },
+      {
+        title: "About North Bend Consulting",
+        content: `
+    <p><strong>Who We Are:</strong> North Bend Consulting is dedicated to practical, ethical, and human-centered AI training for sales and business teams. We specialize in:</p>
+    <ul>
+      <li>Real-world, values-driven sales solutions—not just theory or buzzwords.</li>
+      <li>Empowering neurodivergent, creative, and “non-traditional” thinkers.</li>
+      <li>Helping teams stand out from generic, “AI slop” with tools and workflow that build trust and connection.</li>
+      <li>Focusing on ethical practices, transparency, and practical results for local business.</li>
+    </ul>
+    <p><strong>Why It Matters:</strong> We believe AI should amplify human skills—not replace them. Our approach is to make your work easier, your outreach more authentic, and your results more effective—without losing what makes your team unique.</p>
+    <p style="color:#ffe478;"><strong>Learn more:</strong> <a href="https://northbendconsulting.com" style="color:#ffe478;" target="_blank">northbendconsulting.com</a></p>
+  `
+      },
+      {
+        title: "Deep Research & Market Analysis Demo",
+        content: `
+  <p><strong>Challenge:</strong> Standard AI outputs are often generic. To win locally, you need research that’s detailed, actionable, and rooted in your market—<em>not</em> AI’s imagination.</p>
+  <ol style="margin-left:0;">
+    <li>
+      <h3 style="margin-top:1.4em;">Step 1: Frame the Research Request</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> A specific, detailed prompt sets boundaries for what info matters and what doesn't. The more context, the smarter your results.
+      </div>
+      <pre class="prompt-block">Deep Retail Market Research Prompt:
+For: Chamber of Commerce, Small Businesses, & Main Street Retail (Brevard/Transylvania County)
+Goal: Deliver a comprehensive, data-driven market analysis of the retail sector in Transylvania County—with a spotlight on Brevard’s downtown “Heart of Brevard” district.
+(Then list sections to cover...)</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Deep Retail Market Research Prompt:\\nFor: Chamber of Commerce, Small Businesses, & Main Street Retail (Brevard/Transylvania County)\\nGoal: Deliver a comprehensive, data-driven market analysis of the retail sector in Transylvania County—with a spotlight on Brevard’s downtown “Heart of Brevard” district.\\n(Then list sections to cover...)');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 2: Attach References</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Always upload or cite your real local research and files. This grounds the AI and prevents hallucination or fake data.
+      </div>
+      <pre class="prompt-block">Please reference all attached files and use only publicly verifiable data. Cite every source used, and avoid filling gaps with guesses.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Please reference all attached files and use only publicly verifiable data. Cite every source used, and avoid filling gaps with guesses.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 3: Use Follow-Up Questions</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Dig deeper—ask clarifying questions about anything that seems off or incomplete. AI works best when you treat it like a conversation, not a one-and-done.
+      </div>
+      <pre class="prompt-block">Based on this initial research, what local trends stand out for [my business or market]? What data is missing or needs clarification?</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Based on this initial research, what local trends stand out for [my business or market]? What data is missing or needs clarification?');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+  </ol>
+  <div style="margin-top:2em;"><strong>Pro Move:</strong> Always ask for sources or citations. If a result doesn’t “feel right,” ask AI to show its work or point to the specific data used.</div>
+`
+      },
+      {
+        title: "Project Folders, Custom Instructions, & Best Practices",
+        content: `
+  <p><strong>Challenge:</strong> It’s easy to lose track of context, brand voice, or project-specific rules. A well-set project folder keeps every session focused and relevant.</p>
+  <ol style="margin-left:0;">
+    <li>
+      <h3 style="margin-top:1.4em;">Step 1: Start with Clear Instructions</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Custom instructions make your AI project-specific. Set audience, purpose, and ethical priorities at the top—before you even start prompting.
+      </div>
+      <pre class="prompt-block">Custom Instructions:
+Audience: [Your target audience]
+Purpose: [What you want to achieve]
+Ethical Focus: [e.g., human-centered, build trust, cite sources]
+Key Resources: [Attach files, list trusted references]</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Custom Instructions:\\nAudience: [Your target audience]\\nPurpose: [What you want to achieve]\\nEthical Focus: [e.g., human-centered, build trust, cite sources]\\nKey Resources: [Attach files, list trusted references]');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 2: Reference Internal Project Files</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> AI works better when it has access to all project files. Always upload and refer to your key docs before searching the open web.
+      </div>
+      <pre class="prompt-block">Before using any external data, review all attached project files for relevant details, context, and brand guidance.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Before using any external data, review all attached project files for relevant details, context, and brand guidance.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+  </ol>
+  <div style="margin-top:2em;"><strong>Best Practice:</strong> Revisit your custom instructions and resource files at the start of every new project or major prompt.</div>
+`
+      },
+      {
+        title: "Brand Voice Development Demo",
+        content: `
+  <p><strong>Challenge:</strong> AI can be generic or robotic. To stand out, develop a brand voice that is both authentic and adaptable to your style, your team, and your client base.</p>
+  <ol style="margin-left:0;">
+    <li>
+      <h3 style="margin-top:1.4em;">Step 1: Analyze Research & Team Values</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Strong brand voice starts with clarity. Upload your company's brand guidelines, real sales emails, and research—then ask AI to summarize what makes your brand unique.
+      </div>
+      <pre class="prompt-block">I have uploaded our company brand guidelines, internal sales team research, and several real sales emails as project files. Please analyze these files and list our company’s core values, tone, and brand voice traits. Make sure to reference language and examples found in the uploads.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('I have uploaded our company brand guidelines, internal sales team research, and several real sales emails as project files. Please analyze these files and list our company’s core values, tone, and brand voice traits. Make sure to reference language and examples found in the uploads.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 2: Build Your Personal Voice</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Your “human layer” is the secret sauce. Use your own emails, proposals, or LinkedIn bio to teach AI your style and strengths.
+      </div>
+      <pre class="prompt-block">Using the personal outreach emails, cover letters, or LinkedIn bio I've uploaded as project files, analyze my writing style and summarize my personal brand voice in 3–5 defining traits and a 2–3 sentence paragraph. Reference patterns and language from the uploads.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Using the personal outreach emails, cover letters, or LinkedIn bio I\\'ve uploaded as project files, analyze my writing style and summarize my personal brand voice in 3–5 defining traits and a 2–3 sentence paragraph. Reference patterns and language from the uploads.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 3: Merge & Iterate</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> The best outreach is a blend—company values, team traits, and your own voice, tailored for each new client or situation.
+      </div>
+      <pre class="prompt-block">Now merge my company brand voice, sales team tone, and my personal brand (all uploaded as project files) into a single, authentic summary paragraph for use in sales and outreach. Make it warm, local, and human—not generic. Reference language and specific phrases from the uploaded materials.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Now merge my company brand voice, sales team tone, and my personal brand (all uploaded as project files) into a single, authentic summary paragraph for use in sales and outreach. Make it warm, local, and human—not generic. Reference language and specific phrases from the uploaded materials.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+  </ol>
+  <div style="margin-top:2em;"><strong>Smart Move:</strong> Your brand voice is never “done”—tweak it as you learn what works best with clients and your team. Save your favorite outputs to update your brand guidelines and training.</div>
+`
+      },
+      {
+        title: "Real-World Action: Opportunity Mapping",
+        content: `
+  <p><strong>Challenge:</strong> Anyone can analyze data—winning teams turn research into leads and outreach, grounded in what’s real.</p>
+  <ol style="margin-left:0;">
+    <li>
+      <h3 style="margin-top:1.4em;">Step 1: Identify Opportunity</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Use uploaded project research and data—don’t let AI guess. Point it at the right files, and ask for actionable outcomes.
+      </div>
+      <pre class="prompt-block">Based on the uploaded market research and project files, identify the top three business types in Transylvania County most primed to benefit from advertising with AMP. Format the response as a table and include a rationale for each.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Based on the uploaded market research and project files, identify the top three business types in Transylvania County most primed to benefit from advertising with AMP. Format the response as a table and include a rationale for each.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 2: Localize for Action</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Ask for local details—real businesses, seasonal events, or outreach angles—using the actual files uploaded, not web guesses.
+      </div>
+      <pre class="prompt-block">From the project research files and any attached local business directories, list specific businesses, upcoming seasonal events, or trends that align with our findings. Suggest 2–3 outreach ideas tailored for the next quarter, citing file sources.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('From the project research files and any attached local business directories, list specific businesses, upcoming seasonal events, or trends that align with our findings. Suggest 2–3 outreach ideas tailored for the next quarter, citing file sources.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+  </ol>
+  <div style="margin-top:2em;"><strong>Action Step:</strong> Every prompt here references uploaded files—ground your AI for real impact and better outcomes.</div>
+`
+      },
+      {
+        title: "Feedback Loop, Objections, & Sales Toolkit",
+        content: `
+  <p><strong>Challenge:</strong> Use AI to test your outreach—reference real campaigns and research files so responses reflect your actual prospects, not generic scenarios.</p>
+  <ol style="margin-left:0;">
+    <li>
+      <h3 style="margin-top:1.4em;">Step 1: Roleplay a Real Objection</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Upload your outreach draft, client research, or call notes as project files, and ask AI to roleplay with those specifics.
+      </div>
+      <pre class="prompt-block">You are now roleplaying as the owner or manager of a [business type] in Transylvania County, with access to the outreach email and project research files I uploaded. Respond to my outreach as if you’re skeptical and provide a detailed critique, referencing details from the files.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('You are now roleplaying as the owner or manager of a [business type] in Transylvania County, with access to the outreach email and project research files I uploaded. Respond to my outreach as if you’re skeptical and provide a detailed critique, referencing details from the files.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 2: Objection Toolkit</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Ask AI to build your “FAQ” list from real data—use the uploaded project and client files to generate the most likely objections.
+      </div>
+      <pre class="prompt-block">Review the uploaded project research and outreach email. List the most likely questions, concerns, hesitations, or objections a business owner in Transylvania County might have. Be specific and reference file content where possible.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Review the uploaded project research and outreach email. List the most likely questions, concerns, hesitations, or objections a business owner in Transylvania County might have. Be specific and reference file content where possible.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+    <li>
+      <h3 style="margin-top:1.4em;">Step 3: Expert Response Toolkit</h3>
+      <div style="margin-bottom:0.5em;">
+        <strong>Why:</strong> Use your actual data—make the toolkit responses as practical and grounded as possible, using the project files and local context.
+      </div>
+      <pre class="prompt-block">Now act as an expert AMP (WLOS-TV & digital) sales strategist. Using the objections above and all uploaded project files, create a response toolkit—concise, warm, and local-focused, citing file sources for each response.</pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('Now act as an expert AMP (WLOS-TV & digital) sales strategist. Using the objections above and all uploaded project files, create a response toolkit—concise, warm, and local-focused, citing file sources for each response.');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Prompt',1500);">Copy Prompt</button>
+    </li>
+  </ol>
+  <div style="margin-top:2em;"><strong>Pro Move:</strong> The best sales scripts are never made up—ground every prompt and answer in your project’s real files and research.</div>
+`
+      },
+      {
+        title: "Closing: Human-in-the-Loop & Amplification",
+        content: `
+      <p><strong>Key Message:</strong>
+        <ul>
+          <li>“You’re not being replaced. You’re being amplified.”</li>
+          <li><em>Every</em> prompt you write, every file you upload, is shaping the future of your workflow.</li>
+        </ul>
+      </p>
+      <p><strong>Action:</strong>
+        <ul>
+          <li>Try your own version of a feedback loop prompt (roleplay as a prospect, get objections, revise your script).</li>
+          <li>Share your best prompt or “aha moment” with your team.</li>
+        </ul>
+      </p>
+      <p><strong>Next Steps:</strong> Access the live custom GPT and demo tools via QR code or leave-behind link. Keep experimenting—<em>AI only gets better as you shape it.</em></p>
+    `
+      }
+    ];
+
+    // Setup
+    let currentSlide = 0;
+    const slideImg = document.getElementById("slide-img");
+    const annotationBlock = document.getElementById("annotation-block");
+    const slideCounter = document.getElementById("slide-counter");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function showSlide(idx) {
+      // Clamp idx
+      if (idx < 0) idx = 0;
+      if (idx > slideCount - 1) idx = slideCount - 1;
+      currentSlide = idx;
+      // Update image
+      const imgNum = (idx+1).toString().padStart(3, "0");
+      slideImg.src = `${slidePrefix}${imgNum}${slideExt}`;
+      slideImg.alt = `Slide ${idx+1}`;
+      // Update annotation
+      const ann = annotations[idx] || { title: "", content: "" };
+      annotationBlock.innerHTML = `<h2>${ann.title}</h2>${ann.content}`;
+      // Update counter
+      slideCounter.textContent = `Slide ${idx+1} of ${slideCount}`;
+      // Disable nav at ends
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === slideCount - 1;
+    }
+
+    prevBtn.onclick = () => showSlide(currentSlide - 1);
+    nextBtn.onclick = () => showSlide(currentSlide + 1);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "ArrowLeft") showSlide(currentSlide - 1);
+      else if (e.key === "ArrowRight") showSlide(currentSlide + 1);
+    });
+
+    // Init
+    showSlide(0);
+  </script>
+</body>
+</html>
